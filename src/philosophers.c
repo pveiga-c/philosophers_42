@@ -6,11 +6,11 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:35:37 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/09/20 17:21:10 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/09/25 16:59:07 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../includes/philosophers.h"
 
 int check_ac(int ac)
 {
@@ -36,6 +36,8 @@ int check_av(int ac, char **av)
     int time_to_sleep;
     int number_of_times_each_philosopher_must_eat;
 
+    if(!isdigit(ac, av))
+        return (1);    
     number_of_philosophers = ft_atoi(av[1]);
     time_to_die = ft_atoi(av[2]);
     time_to_eat = ft_atoi(av[3]);
@@ -44,14 +46,12 @@ int check_av(int ac, char **av)
         number_of_times_each_philosopher_must_eat = ft_atoi(av[5]);
     else
         number_of_times_each_philosopher_must_eat = -1;
-
-    ft_printf("%d\n", number_of_philosophers);
-    ft_printf("%d\n", time_to_die);
-    ft_printf("%d\n", time_to_eat);
-    ft_printf("%d\n", time_to_sleep);
-    ft_printf("%d\n", number_of_times_each_philosopher_must_eat);
-    
     return (0);
+}
+
+int isdigit(int ac, char **av)
+{
+    if(av[1])
 }
 
 int main (int ac, char **av)

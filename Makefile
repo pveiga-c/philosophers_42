@@ -1,14 +1,14 @@
 NAME_PROJECT 	   = Philosophers
 
-NAME			   = philosophers
+NAME			   = philo
 
-SRCS			   = $(wildcard srcs/*.c)
+SRCS			   = $(wildcard src/*.c)
 
 OBJS			   = $(SRCS:.c=.o)
 
 CC 				   = cc 
 
-CFLAGS 			   = -g -Wall -Wextra -Werror  # -fsanitize=address
+CFLAGS 			   = -Wall -Wextra -Werror -g # -fsanitize=address
 
 LIBFT_PATH 		   = libft
 
