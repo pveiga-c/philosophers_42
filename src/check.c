@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 19:07:06 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/09/25 19:07:32 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/09/25 19:20:34 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,7 @@ int check_av(int ac, char **av)
 		printf("Error: Invalid arguments\n");
         return (1);
     }
-    ft_printf("%d\n", number_of_philos);
-    ft_printf("%d\n", time_to_die);
-    ft_printf("%d\n", time_to_eat);
-    ft_printf("%d\n", time_to_sleep);
-    ft_printf("%d\n", number_of_times_each_philosopher_must_eat);
-    return (0);
+    return (0); 
 }
 
 int is_digit(int ac, char **av)
