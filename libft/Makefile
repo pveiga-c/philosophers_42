@@ -92,8 +92,9 @@ all:		$(NAME)
 
 $(NAME):	$(OBJS)
 			@ar -rcs $(NAME) $(OBJS)
-			@echo "$(BLUE)Compilation of $(NAME_PROJECT): $(GREEN)[OK]$(RESET)"
-			@echo "$(BLUE)$(NAME_PROJECT) created:        $(GREEN)[OK]$(RESET)"
+#			clear
+#			@echo "$(BLUE)Compilation of $(NAME_PROJECT): $(GREEN)[OK]$(RESET)"
+#			@echo "$(BLUE)$(NAME_PROJECT) created:        $(GREEN)[OK]$(RESET)"
 
 $(OBJ_DIR)/%.o: %.c
 	    	@mkdir -p $(dir $@)

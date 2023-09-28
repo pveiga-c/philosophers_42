@@ -8,7 +8,7 @@ OBJS			   = $(SRCS:.c=.o)
 
 CC 				   = cc 
 
-CFLAGS 			   = -Wall -Wextra -Werror -g # -fsanitize=address
+CFLAGS 			   = -pthread -Wall -Wextra -Werror -g # -fsanitize=address
 
 LIBFT_PATH 		   = libft
 
@@ -26,7 +26,7 @@ $(NAME):	$(OBJS)
 			$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) -o $(NAME) 
 #			clear
 			@echo "$(BLUE)Compilation $(NAME_PROJECT) $(GREEN)  [OK]$(RESET)"
-			@echo "$(BLUE)Successfully built $(GREEN)   [OK]$(RESET)"
+			@echo "$(BLUE)Successfully built $(GREEN)        [OK]$(RESET)"
 	
 clean:		
 	$(RM) $(OBJS)
