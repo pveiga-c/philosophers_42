@@ -6,7 +6,7 @@
 /*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:35:37 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/10 09:25:07 by correia          ###   ########.fr       */
+/*   Updated: 2023/10/10 09:30:04 by correia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void    start_time(struct timeval *time)
 {
     gettimeofday(time, NULL);
 }
-void pick_up_left(t_data *data, t_philo *philo)
+int pick_up_left(t_data *data, t_philo *philo)
 {
     pthread_mutex_lock(&philo->mutex_philo);
     pthread_mutex_lock(&data->philo[philo->id_left_philo]->mutex_philo);
@@ -82,9 +82,16 @@ int pick_up_right(t_data *data, t_philo *philo)
 int pick_up_fork(t_data *data, t_philo *philo)
 {
     if(philo->id % 2 == 0)
-        pick_up_left(data, philo);
+    {
+        if(pick_up_left(data, philo))
+            return (1);
+    }
     else
-        pick_up_right(data, philo);
+    {
+        if(pick_up_right(data, philo))
+            return (1);
+    }
+    return (0);
 }
 
 void philo_eat(t_data *data, t_philo *philo)
