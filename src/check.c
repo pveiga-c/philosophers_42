@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 19:07:06 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/05 15:20:07 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/10 09:24:16 by correia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../includes/philosophers.h"
 
 #include "../includes/philosophers.h"
 
@@ -22,6 +24,17 @@ int check_args(int ac, char **av)
         return (1);
     return (0);
 }
+/**
+ * Verifica se o número de argumentos não é 5 ou 6.
+ * 
+ * Verifica o número de argumentos da linha de comando e exibe uma mensagem 
+ * de ajuda, se necessário.
+ *
+ * @param ac Número de argumentos da linha de comando.
+ * @return Retorna 0 se o número de argumentos estiver correto,
+ *  1 se houver erro na quantidade de argumentos.
+ * 
+ */
 
 int check_ac(int ac)
 {
@@ -38,6 +51,18 @@ int check_ac(int ac)
     }
     return (0);
 }
+/**
+ * Verifica e valida os argumentos da linha de comando.
+ *
+ * @param ac Número de argumentos da linha de comando.
+ * @param av Array de argumentos da linha de comando.
+ * @return Retorna 0 se os argumentos são válidos, 1 se houver erros nos argumentos.
+ * 
+ * Converte os argumentos da linha de comando em variáveis inteiras.
+ * Verifica se o argumento opcional está presente e, se sim, converte-o.
+ * Verifica se os argumentos estão dentro dos limites aceitáveis.
+ */
+
 
 int check_av(int ac, char **av)
 {
@@ -64,6 +89,14 @@ int check_av(int ac, char **av)
     }
     return (0); 
 }
+/**
+ * Verifica se todos os argumentos da linha de comando contêm apenas dígitos.
+ *
+ * @param ac Número de argumentos da linha de comando.
+ * @param av Array de argumentos da linha de comando.
+ * @return Retorna 0 se todos os argumentos contêm apenas dígitos, 1 se houver 
+ * algum caractere não-dígito.
+ */
 
 int is_digit(int ac, char **av)
 {
@@ -86,4 +119,22 @@ int is_digit(int ac, char **av)
         i++;
     }
     return(0);
+}
+
+void    print_data(t_data *data)
+{
+    int i;
+
+    i = 0;
+    printf("number of philos = %d\n", data->number_of_philos);
+    printf("time to die = %d\n", data->time_to_die);
+    printf("time to eat = %d\n", data->time_to_eat);
+    printf("time to sleep = %d\n", data->time_to_sleep);
+    printf("number of meals = %d\n", data->number_of_meals);
+    while(i < data->number_of_philos)
+    {
+        printf("id = %d\n", data->philo[i]->id);
+        printf("state = %d\n", data->philo[i]->state);
+        i++;      
+    }
 }

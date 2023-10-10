@@ -3,57 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 11:08:22 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/05 14:33:20 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/10 09:25:38 by correia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-// void	ft_usleep(int milisec)
-// {
-// 	struct timeval	time_v;
-// 	long int		start;
-// 	long int		end;
-
-// 	gettimeofday(&time_v, NULL);
-// 	start = (time_v.tv_sec * 1000) + (time_v.tv_usec / 1000);
-// 	end = start + milisec;
-// 	while (start < end)
-// 	{
-// 		gettimeofday(&time_v, NULL);
-// 		start = (time_v.tv_sec * 1000) + (time_v.tv_usec / 1000);
-// 		usleep(100);
-// 	}
-// }
-
-// time_t	get_time(t_table *table)
-// {
-// 	struct timeval	curr_time;
-
-// 	gettimeofday(&curr_time, 0);
-// 	return ((curr_time.tv_sec * 1000 + curr_time.tv_usec / 1000) \
-// 	- table->start_time);
-// }
-
-// time_t	get_timestamp(void)
-// {
-// 	struct timeval	curr_time;
-
-// 	gettimeofday(&curr_time, 0);
-// 	return ((curr_time.tv_sec * 1000l + curr_time.tv_usec / 1000l));
-// }
-
-void	update_time(struct timeval *time, pthread_mutex_t *mutex)
+/**
+ * Returns the current time in milliseconds since the Epoch.
+ * 
+ * @return The current time in milliseconds since the Epoch, or 0 if an error occurred.
+ */
+__uint64_t get_time(void)
 {
-	if (mutex)
-	{
-		pthread_mutex_lock(mutex);
-		gettimeofday(time, NULL);
-		pthread_mutex_unlock(mutex);
-	}
-	else
-		gettimeofday(time, NULL);
+    struct timeval tv;
+    
+    if(gettimeofday(&tv, NULL))
+        return (0);
+    return ((tv.tv_sec * (__uint64_t)1000) + (tv.tv_sec / 1000));     
+}
+/**
+ * Mede o tempo decorrido durante um período especificado em microssegundos.
+ *
+ * @param data Ponteiro para a estrutura de dados que contém o período de sono.
+ * @return Retorna o tempo decorrido em microssegundos durante o período de sono.
+ */
+
+__uint64_t  passed_time(t_data *data)
+{
+    __uint64_t start_time;
+    __uint64_t  now;
+
+    start_time = get_time();
+    usleep(data->time_to_sleep);
+    now = get_time();
+    return (now - start_time);
 }

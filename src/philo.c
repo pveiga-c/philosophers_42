@@ -3,49 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:46:58 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/05 13:50:20 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/10 09:24:46 by correia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void    init_data(int ac, char **av, t_table *table)
+/**
+ * Inicializa a estrutura de dados com valores dos 
+ * argumentos da linha de comando.
+ *
+ * @param ac Número de argumentos da linha de comando.
+ * @param av Array de argumentos da linha de comando.
+ * @param data Ponteiro para a estrutura t_data que será inicializada.
+ */
+
+void    init_data(int ac, char **av, t_data *data)
 {
-    table->number_of_philos = ft_atoi(av[1]);
-    table->time_to_die = ft_atoi(av[2]);
-    table->time_to_eat = ft_atoi(av[3]);
-    table->time_to_sleep = ft_atoi(av[4]);
+    data->number_of_philos = ft_atoi(av[1]);
+    data->time_to_die = ft_atoi(av[2]);
+    data->time_to_eat = ft_atoi(av[3]);
+    data->time_to_sleep = ft_atoi(av[4]);
     if(ac == 6)
-        table->number_of_meals = ft_atoi(av[5]);
+        data->number_of_meals = ft_atoi(av[5]);
     else
-        table->number_of_meals = -1;
+        data->number_of_meals = -1;
     
 }
 
-void    alloc_philos(t_table *table)
+/**
+ * Aloca memória dinamicamente para as estruturas 
+ * de filósofos e threads.
+ *
+ * @param data Ponteiro para a estrutura de dados 
+ * que contém informações sobre os filósofos.
+ * 
+ * Aloca memória para o array de threads com base 
+ * no número de filósofos.
+ * 
+ * Aloca memória para o array de estruturas t_philo 
+ * com base no número de filósofos.
+ * 
+ * Inicializa os campos da estrutura t_philo para 
+ * cada filósofo.
+ */
+
+void    alloc_philos(t_data *data)
 {
     int i;
 
+    data->thread = malloc(sizeof(pthread_t ) * data->number_of_philos + 1);
+    if(!data->thread)
+        write(1, "Malloc Error", 13);
+    data->philo = malloc(sizeof(t_philo *) * data->number_of_philos + 1);
+    if(!data->philo)
+        write(1, "Malloc Error", 13);
     i = 0;
-    table->philo = (t_philo *)ft_calloc(sizeof(t_philo), table->number_of_philos);
-    while(i < table->number_of_philos)
+    while(i < data->number_of_philos)
     {
-        table->philo[i]->id = i;
-        table->philo[i]->state = THINK;
-    if (pthread_mutex_init(&(table->philo[i].mutex_eat_check), NULL) != 0)
-			write (1, "Mutex error", 13);
-		if (pthread_mutex_init(&(table->philo[i].mutex_life), NULL) != 0)
-			write (1, "Mutex error", 13);
-		i++;    
+        data->philo[i] = malloc(sizeof(t_philo));
+        if(!data->philo)
+            write(1, "Malloc Error", 13);
+        pthread_mutex_init(&data->philo[i]->mutex_philo, NULL);
+        data->philo[i]->id = i + 1;
+        data->philo[i]->state = THINK; 
+        data->philo[i]->fork = 1;
+        data->philo[i]->n_eaten = 0; 
+        i++;
     }
-}ypedef struct s_philo
-{
-	int				id;
-	pthread_mutex_t	mutex;
-	int				state;
-	pthread_mutex_t		mutex_eat_check;
-	pthread_mutex_t		mutex_life;
-}                   t_p
+}
