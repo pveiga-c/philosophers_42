@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:46:58 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/10 09:24:46 by correia          ###   ########.fr       */
+/*   Updated: 2023/10/10 19:20:20 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,17 @@ void    init_data(int ac, char **av, t_data *data)
         data->number_of_meals = ft_atoi(av[5]);
     else
         data->number_of_meals = -1;
-    
+    pthread_mutex_init(&data->mutex_msg, NULL);
 }
 
 /**
- * Aloca memória dinamicamente para as estruturas 
- * de filósofos e threads.
- *
- * @param data Ponteiro para a estrutura de dados 
- * que contém informações sobre os filósofos.
- * 
- * Aloca memória para o array de threads com base 
- * no número de filósofos.
- * 
- * Aloca memória para o array de estruturas t_philo 
- * com base no número de filósofos.
- * 
- * Inicializa os campos da estrutura t_philo para 
- * cada filósofo.
+ * Aloca memória dinamicamente para as estruturas de filósofos e threads.
+ * @param data Ponteiro para a estrutura de dados que contém informações 
+ * sobre os filósofos.
+ * Aloca memória para o array de threads com base no número de filósofos.
+ * Aloca memória para o array de estruturas t_philo com base no número 
+ * de filósofos.
+ * Inicializa os campos da estrutura t_philo para cada filósofo.
  */
 
 void    alloc_philos(t_data *data)
@@ -68,10 +61,12 @@ void    alloc_philos(t_data *data)
         if(!data->philo)
             write(1, "Malloc Error", 13);
         pthread_mutex_init(&data->philo[i]->mutex_philo, NULL);
-        data->philo[i]->id = i + 1;
+        data->philo[i]->id = i;
         data->philo[i]->state = THINK; 
         data->philo[i]->fork = 1;
         data->philo[i]->n_eaten = 0; 
+        data->philo[i]->data = data;
         i++;
+        
     }
 }

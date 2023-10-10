@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:35:37 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/10 09:30:04 by correia          ###   ########.fr       */
+/*   Updated: 2023/10/10 19:28:11 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,20 @@ void    start(t_data *data)
         pthread_join(data->thread[i], NULL);        
         i++;
     }
-    
-    //print_data(data);
-   //printf("time to sleep: %ld\n", passed_time(data));
 }
+
+void    print_msg(t_data *data, t_philo *philo, char *str)
+{
+    pthread_mutex_lock(&data->mutex_msg);
+    ft_printf("%ld %d %s\n", passed_time, philo->id, str);
+    pthread_mutex_unlock(&data->mutex_msg);
+
+}
+
 void    id_left_philo(t_data *data, t_philo *philo)
 {
-    if(philo->id == 1)
-        philo->id_left_philo = data->philo[data->number_of_philos]->id;
+    if(philo->id == 0)
+       philo->id_left_philo = data->philo[data->number_of_philos - 1]->id;
     else
         philo->id_left_philo = data->philo[philo->id - 1]->id;        
 }
@@ -43,63 +49,14 @@ void    start_time(struct timeval *time)
 {
     gettimeofday(time, NULL);
 }
-int pick_up_left(t_data *data, t_philo *philo)
-{
-    pthread_mutex_lock(&philo->mutex_philo);
-    pthread_mutex_lock(&data->philo[philo->id_left_philo]->mutex_philo);
-    if(philo->fork == 1 && data->philo[philo->id_left_philo]->data == 1)
-    {
-        philo->fork--;
-        data->philo[philo->id_left_philo]->fork--;
-        pthread_mutex_lock(&philo->mutex_philo);
-        pthread_mutex_lock(&data->philo[philo->id_left_philo]->mutex_philo);
-        print_msg();
-        return (1);
-    }
-    pthread_mutex_lock(&philo->mutex_philo);
-    pthread_mutex_lock(&data->philo[philo->id_left_philo]->mutex_philo);
-    return (0);
-}
 
-int pick_up_right(t_data *data, t_philo *philo)
-{
-    pthread_mutex_lock(&data->philo[philo->id_left_philo]->mutex_philo);
-    pthread_mutex_lock(&philo->mutex_philo);
-    if(philo->fork == 1 && data->philo[philo->id_left_philo]->data == 1)
-    {
-        philo->fork--;
-        data->philo[philo->id_left_philo]->fork--;
-        pthread_mutex_lock(&data->philo[philo->id_left_philo]->mutex_philo);
-        pthread_mutex_lock(&philo->mutex_philo);
-        print_msg();
-        return (1);
-    }
-    pthread_mutex_lock(&data->philo[philo->id_left_philo]->mutex_philo);
-    pthread_mutex_lock(&philo->mutex_philo);
-    return (0);
-}
-
-int pick_up_fork(t_data *data, t_philo *philo)
-{
-    if(philo->id % 2 == 0)
-    {
-        if(pick_up_left(data, philo))
-            return (1);
-    }
-    else
-    {
-        if(pick_up_right(data, philo))
-            return (1);
-    }
-    return (0);
-}
 
 void philo_eat(t_data *data, t_philo *philo)
 {
     if(pick_up_fork(data, philo))
     {
         philo->state = EAT;
-        printf(print_msg());
+        print_msg(data, philo, "is eating");
         philo->n_eaten++;
     }
 }
@@ -107,13 +64,13 @@ void philo_eat(t_data *data, t_philo *philo)
 void philo_sleep(t_data *data, t_philo *philo)
 {
     philo->state = SLEEP;
-    print_msg();
+    print_msg(data, philo, "is sleeping");
 }
 
 void philo_think(t_data *data, t_philo *philo)
 {
     philo->state = THINK;
-    print_msg();
+    print_msg(data, philo, "is thinking");
 }
 
 
@@ -123,8 +80,7 @@ void    *routine_philo(void *arg)
     t_data  *data;
     
     philo = (t_philo *)arg;
-    data = philo->data;
-    it_left_philo(data, philo);
+    id_left_philo(data, philo);
     start_time(&philo->last_eat);
     while(1)
     {
