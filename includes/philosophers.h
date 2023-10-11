@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:35:30 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/10 18:07:26 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/11 20:03:38 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ typedef struct s_data
 	int			number_of_meals;
 	pthread_mutex_t	mutex_msg;
 	t_philo		**philo;
-	pthread_t 	*thread;
 }					t_data;
 
 struct s_philo
 {
+	pthread_t 		thread;
 	t_data			*data;
 	int				id;
 	int				fork;
@@ -79,19 +79,22 @@ size_t  	passed_time(t_data *data);
 
 /*******************forks***************************/
 
-int 	pick_up_fork(t_data *data, t_philo *philo);
-int 	pick_up_left(t_data *data, t_philo *philo);
-int 	pick_up_right(t_data *data, t_philo *philo);
+int 	pick_up_fork(t_philo *philo);
+int 	pick_up_left(t_philo *philo);
+int 	pick_up_right(t_philo *philo);
 
 /*******************forks***************************/
 
 void    start(t_data *data);
-void    print_msg(t_data *data, t_philo *philo, char *str);
-void    id_left_philo(t_data *data, t_philo *philo);
-void    start_time(struct timeval *time);
-void 	philo_eat(t_data *data, t_philo *philo);
-void 	philo_sleep(t_data *data, t_philo *philo);
-void 	philo_think(t_data *data, t_philo *philo);
+void    print_msg(t_philo *philo, char *str);
+void    id_left_philo(t_philo *philo);
+void    update_time(struct timeval *time);
+void 	philo_eat(t_philo *philo);
+void 	philo_sleep(t_philo *philo);
+void 	philo_think(t_philo *philo);
 void    *routine_philo(void *arg);
+void ft_free(t_data *data);
+void    drop_forks(t_philo *philo);
+
 
 #endif 

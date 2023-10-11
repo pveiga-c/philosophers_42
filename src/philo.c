@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:46:58 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/10 19:20:20 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/11 19:51:36 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,6 @@ void    alloc_philos(t_data *data)
 {
     int i;
 
-    data->thread = malloc(sizeof(pthread_t ) * data->number_of_philos + 1);
-    if(!data->thread)
-        write(1, "Malloc Error", 13);
     data->philo = malloc(sizeof(t_philo *) * data->number_of_philos + 1);
     if(!data->philo)
         write(1, "Malloc Error", 13);
@@ -61,11 +58,13 @@ void    alloc_philos(t_data *data)
         if(!data->philo)
             write(1, "Malloc Error", 13);
         pthread_mutex_init(&data->philo[i]->mutex_philo, NULL);
-        data->philo[i]->id = i;
+        data->philo[i]->id = i + 1;
         data->philo[i]->state = THINK; 
         data->philo[i]->fork = 1;
         data->philo[i]->n_eaten = 0; 
         data->philo[i]->data = data;
+        data->philo[i]->id_left_philo = -1;
+        id_left_philo(data->philo[i]); 
         i++;
         
     }
