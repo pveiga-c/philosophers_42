@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:46:58 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/11 19:51:36 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:49:53 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,12 @@ void    alloc_philos(t_data *data)
         i++;
         
     }
+}
+
+void    id_left_philo(t_philo *philo)
+{
+    if(philo->id == 1)
+       philo->id_left_philo = philo->data->number_of_philos;
+    else
+        philo->id_left_philo = philo->id - 1;      
 }

@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 11:08:22 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/11 18:28:50 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:49:38 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,9 @@ size_t  passed_time(t_data *data)
     printf("n : %ld\n", now);
 
     return (now - start_time);
+}
+
+void    update_time(struct timeval *time)
+{
+    gettimeofday(time, NULL);
 }
