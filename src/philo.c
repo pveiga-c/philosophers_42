@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:46:58 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/12 15:49:53 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/12 20:58:24 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void    init_data(int ac, char **av, t_data *data)
         data->number_of_meals = ft_atoi(av[5]);
     else
         data->number_of_meals = -1;
+    data->start_time = get_timestamp();
     pthread_mutex_init(&data->mutex_msg, NULL);
 }
 
@@ -58,6 +59,7 @@ void    alloc_philos(t_data *data)
         if(!data->philo)
             write(1, "Malloc Error", 13);
         pthread_mutex_init(&data->philo[i]->mutex_philo, NULL);
+        pthread_mutex_init(&data->philo[i]->mutex_life, NULL);
         data->philo[i]->id = i + 1;
         data->philo[i]->state = THINK; 
         data->philo[i]->fork = 1;

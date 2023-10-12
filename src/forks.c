@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:36:55 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/12 15:41:46 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/12 20:44:21 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int pick_up_left(t_philo *philo)
         (philo->data->philo[i]->fork)--;
         pthread_mutex_unlock(&philo->mutex_philo);
         pthread_mutex_unlock(&philo->data->philo[i]->mutex_philo);
-        print_msg(philo, "has taken a fork");
-        print_msg(philo, "has taken a fork");
+        // print_msg(philo, "has taken a fork");
+        // print_msg(philo, "has taken a fork");
         return (1);
     }
     pthread_mutex_unlock(&philo->mutex_philo);
@@ -47,8 +47,8 @@ int pick_up_right(t_philo *philo)
         (philo->data->philo[i]->fork)--;
         pthread_mutex_unlock(&philo->data->philo[i]->mutex_philo);
         pthread_mutex_unlock(&philo->mutex_philo);
-        print_msg(philo, "has taken a fork");
-        print_msg(philo, "has taken a fork");
+        // print_msg(philo, "has taken a fork");
+        // print_msg(philo, "has taken a fork");
         
         return (1);
     }

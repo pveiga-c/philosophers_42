@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:47:56 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/12 15:49:24 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/12 21:02:53 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void    *routine_philo(void *arg)
     t_data  *data;
     
     philo = (t_philo *)arg;
-    update_time(&philo->last_eat);
     while(1)
     {
         if(philo->state == THINK)
