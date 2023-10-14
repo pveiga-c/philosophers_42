@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:35:30 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/12 21:18:09 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/14 17:00:51 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ typedef struct s_data
 	int 			time_to_eat;
 	int				time_to_sleep;
 	int				number_of_meals;
+	int 			dead;
 	size_t		 	start_time;
-	pthread_mutex_t	mutex_msg;
+	pthread_mutex_t	mutex;
 	t_philo			**philo;
 }					t_data;
 
@@ -56,7 +57,7 @@ struct s_philo
 	pthread_mutex_t	mutex_philo;
 	pthread_mutex_t	mutex_life;
 	int				state;
-	struct timeval			last_eat;
+	size_t			last_eat;
 };
 
 /****************philosophers***********************/
@@ -89,8 +90,6 @@ int 	pick_up_right(t_philo *philo);
 void    	start(t_data *data);
 void    	print_msg(t_philo *philo, char *str);
 void    	id_left_philo(t_philo *philo);
-size_t    	update_time(t_philo *philo);
-size_t  	passed_time(t_philo *philo);
 void 		philo_eat(t_philo *philo);
 void 		philo_sleep(t_philo *philo);
 void 		philo_think(t_philo *philo);
@@ -98,5 +97,6 @@ void    	*routine_philo(void *arg);
 void 		ft_free(t_data *data);
 void    	drop_forks(t_philo *philo);
 size_t		get_timestamp(void);
+void    ft_usleep(int milisec, t_philo *philo);
 
 #endif 

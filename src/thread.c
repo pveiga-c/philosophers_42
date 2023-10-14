@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:47:56 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/12 21:02:53 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/14 17:07:07 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void    start(t_data *data)
     int i;
 
     i = 0;
+    data->start_time = get_timestamp();
     while(i < data->number_of_philos)
     {
         pthread_create(&data->philo[i]->thread, NULL, &routine_philo, data->philo[i]);        
@@ -38,6 +39,7 @@ void    *routine_philo(void *arg)
     philo = (t_philo *)arg;
     while(1)
     {
+        
         if(philo->state == THINK)
             philo_eat(philo);
         else if(philo->state == EAT)

@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:35:37 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/12 21:18:46 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/14 16:26:02 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 
 void    print_msg(t_philo *philo, char *str)
 {
-    long int time;
-    time = passed_time(philo);
+    size_t time;
+
+    time = get_timestamp() - philo->data->start_time;
     pthread_mutex_lock(&philo->data->mutex_msg);
-    printf("%ld %d %s\n", time, philo->id, str);
+    printf("%ld %d %s\n", time , philo->id, str);
     pthread_mutex_unlock(&philo->data->mutex_msg);
 
 }
