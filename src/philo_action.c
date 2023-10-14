@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:48:09 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/14 17:07:31 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/14 18:03:07 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,35 @@ void philo_sleep(t_philo *philo)
     philo->state = SLEEP;
     print_msg(philo, "is sleeping");
     ft_usleep(philo->data->time_to_sleep, philo);
+
 }
 
 void philo_think(t_philo *philo)
-{
+{   
     philo->state = THINK;
     print_msg(philo, "is thinking");
 }
 
-int philo_is_dead(t_philo *philo)
+// int philo_is_dead(t_philo *philo)
+// {
+//     pthread_mutex_lock(&philo->data->mutex);
+//     if(philo->data->dead == 1)
+//     {
+//         pthread_mutex_unlock(&philo->data->mutex);
+//         return (1);
+//     }
+//     pthread_mutex_unlock(&philo->data->mutex);
+//     return (0);
+// }
+
+int    check_philo_is_dead(t_philo *philo)
 {
-    pthread_mutex_lock(&philo->data->mutex);
-    if(philo->data->dead == 1)
+    if(get_timestamp() - philo->data->start_time > philo->time_of_life) /* corrigir este tempo parao outros philos*/
     {
-        pthread_mutex_unlock(&philo->data->mutex);
+        print_msg(philo, "dead");
+        philo->data->dead = 1;
+        //ft_free(philo->data);
         return (1);
     }
-    pthread_mutex_unlock(&philo->data->mutex);
     return (0);
 }

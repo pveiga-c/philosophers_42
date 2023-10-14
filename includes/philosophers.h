@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:35:30 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/14 17:00:51 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/14 17:52:49 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_data
 	int 			dead;
 	size_t		 	start_time;
 	pthread_mutex_t	mutex;
+	pthread_mutex_t	mutex_msg;
 	t_philo			**philo;
 }					t_data;
 
@@ -98,5 +99,7 @@ void 		ft_free(t_data *data);
 void    	drop_forks(t_philo *philo);
 size_t		get_timestamp(void);
 void    ft_usleep(int milisec, t_philo *philo);
+int philo_is_dead(t_philo *philo);
+int    check_philo_is_dead(t_philo *philo);
 
 #endif 
