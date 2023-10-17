@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:35:37 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/14 17:21:42 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/17 09:07:54 by correia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int main (int ac, char **av)
     init_data(ac, av, &data);
     alloc_philos(&data);
     start(&data); 
-    ft_free(&data);
+    //ft_free(&data);
        
     return (0);
 }

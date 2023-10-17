@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:47:56 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/14 18:01:16 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/17 09:26:49 by correia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,25 @@ void    start(t_data *data)
 void    *routine_philo(void *arg)
 {
     t_philo *philo;
-    t_data  *data;
     
     philo = (t_philo *)arg;
+   //data->start_time = get_timestamp();
+   //if(philo->id % 2 == 0)
+    //        sleep(100);
     while(!philo->data->dead)
     {
         if(philo->state == THINK)
             philo_eat(philo);
-        if(check_philo_is_dead(philo))
+        if(philo_is_dead(philo))
             return (NULL);
         else if(philo->state == EAT)
             philo_sleep(philo);
+        //if(philo_is_dead(philo))
+        //    break;
         else if(philo->state == SLEEP)
             philo_think(philo);
+       // if(philo_is_dead(philo))
+        //    break;
     }
     return (NULL);
 }
