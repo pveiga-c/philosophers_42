@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:35:37 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/17 09:07:54 by correia          ###   ########.fr       */
+/*   Updated: 2023/10/17 19:01:35 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,36 +18,31 @@ void    print_msg(t_philo *philo, char *str)
 {
     size_t time;
 
-    time = get_timestamp() - philo->data->start_time;
     pthread_mutex_lock(&philo->data->mutex_msg);
+    time = get_timestamp() - philo->data->start_time;
     printf("%ld %d %s\n", time , philo->id, str);
     pthread_mutex_unlock(&philo->data->mutex_msg);
 
 }
 
-void ft_free(t_data *data)
-{
-    int i = 0;
-    
-    while(i < data->number_of_philos)
-        free(data->philo[i++]);
-    free(data->philo);
-}
-
 int main (int ac, char **av)
 {
     t_data data;
-    int i;
-    
-    i= 0;
-    
+    t_philo *philo;
+
     if(check_args(ac, av) == 1)
         return (1);
     init_data(ac, av, &data);
-    alloc_philos(&data);
-    start(&data); 
-    //ft_free(&data);
-       
+    philo = malloc(sizeof(t_philo) * (data.number_of_philos));
+    if(!philo)
+    {
+        printf("Malloc Error\n");
+        return (1);
+    }
+    alloc_philos(&data, philo);
+    start(&data, philo); 
+    free(data.fork);
+    free(philo);   
     return (0);
 }
     

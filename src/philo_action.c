@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_action.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:48:09 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/17 09:26:18 by correia          ###   ########.fr       */
+/*   Updated: 2023/10/17 19:37:58 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,64 @@
 
 void philo_eat(t_philo *philo)
 {
-    if(pick_up_fork(philo))
-    {
-        philo->state = EAT;
-        print_msg(philo, "is eating");
-        pthread_mutex_lock(&philo->data->mutex);
-        philo->last_eat = get_timestamp() + philo->data->start_time;
-        philo->time_of_life = philo->last_eat + philo->data->time_to_die;
-        pthread_mutex_unlock(&philo->data->mutex);
-        ft_usleep(philo->data->time_to_eat, philo);
-        pthread_mutex_lock(&philo->data->mutex);
-        philo->n_eaten++;
-        pthread_mutex_unlock(&philo->data->mutex);
-        drop_forks(philo);
-    }
-    check_philo_is_dead(philo);
+    if(pick_up_fork(philo) == 1)
+        return ;
+    pthread_mutex_lock(&philo->data->mutex_meal);
+    philo->last_eat = get_timestamp();
+    philo->state = EAT;
+    philo->n_eaten--;
+    pthread_mutex_unlock(&philo->data->mutex_meal);
+    print_msg(philo, "is eating");
+    action_philo(philo, philo->data->time_to_eat);
+    drop_forks(philo);
 }
 
 void philo_sleep(t_philo *philo)
 {
     philo->state = SLEEP;
     print_msg(philo, "is sleeping");
-    ft_usleep(philo->data->time_to_sleep, philo);
-    //check_philo_is_dead(philo);
+    action_philo(philo, philo->data->time_to_sleep);
+    ft_usleep(100);
+
 }
 
 void philo_think(t_philo *philo)
 {   
     philo->state = THINK;
     print_msg(philo, "is thinking");
-    //check_philo_is_dead(philo);
+
 }
 
 int philo_is_dead(t_philo *philo)
 {
-    pthread_mutex_lock(&philo->data->mutex);
-    if(philo->data->dead == 1)
-    {
-        pthread_mutex_unlock(&philo->data->mutex);
+    pthread_mutex_lock(&philo->data->mutex_dead);
+    if((get_timestamp() - philo->last_eat) >= philo->data->time_to_die)
+    { 
+        if(philo->data->dead == 1)
+            print_msg(philo, "died");
+        philo->data->dead = 0;
+        philo->state = DEAD;
+        pthread_mutex_unlock(&philo->data->mutex_dead);
         return (1);
     }
-    pthread_mutex_unlock(&philo->data->mutex);
-    return (0);
+    else
+    {
+        pthread_mutex_unlock(&philo->data->mutex_dead); 
+        return (0);
+    }
 }
 
-int    check_philo_is_dead(t_philo *philo)
+void    action_philo(t_philo *philo, size_t time)
 {
-    if(get_timestamp() - philo->data->start_time > philo->time_of_life) /* corrigir este tempo para os outros philos*/
-    {
-        print_msg(philo, "dead");
-        philo->data->dead = 1;
-        ft_free(philo->data);
-        return (1);
-    }
-    return (0);
+    long int	start_time;
+
+	start_time = get_timestamp();
+	while ((get_timestamp() - start_time) < time)
+	{
+		if (philo_is_dead(philo))
+		{
+			return ;
+		}
+		usleep(10);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:35:30 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/14 17:52:49 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:30:20 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,23 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-# define DEAD	0
-# define EAT	1
-# define THINK	2
-# define SLEEP	3
-
 typedef struct s_philo t_philo;
+
+enum e_philostate {
+	THINK,
+	WAIT,
+	EAT,
+	SLEEP,
+	DEAD
+};
+
+
+typedef struct s_fork
+{
+	pthread_mutex_t	mutex_fork;
+	int 			aval;
+}	t_fork;
+
 
 typedef struct s_data
 {
@@ -41,24 +52,23 @@ typedef struct s_data
 	int				number_of_meals;
 	int 			dead;
 	size_t		 	start_time;
-	pthread_mutex_t	mutex;
+	pthread_mutex_t	mutex_meal;
 	pthread_mutex_t	mutex_msg;
-	t_philo			**philo;
+	pthread_mutex_t	mutex_dead;
+	t_fork			*fork;
 }					t_data;
 
 struct s_philo
 {
-	pthread_t 		thread;
-	t_data			*data;
-	size_t		 	time_of_life;
-	int				id;
-	int				fork;
-	int				n_eaten;
-	int				id_left_philo;
-	pthread_mutex_t	mutex_philo;
-	pthread_mutex_t	mutex_life;
-	int				state;
-	size_t			last_eat;
+	pthread_t 			thread;
+	t_data				*data;
+	size_t		 		time_of_life;
+	int					id;
+	int					n_eaten;
+	int					left_fork;
+	int					right_fork;
+	enum e_philostate	state;
+	size_t				last_eat;
 };
 
 /****************philosophers***********************/
@@ -72,12 +82,12 @@ int 	check_args(int ac, char **av);
 int 	check_ac(int ac);
 int 	check_av(int ac, char **av);
 int 	is_digit(int ac, char **av);
-void    print_data(t_data *data);
+//void    print_data(t_data *data);
 
 /*******************check***************************/
 
-void    	alloc_philos(t_data *data);
-void    	start(t_data *data);
+void    alloc_philos(t_data *data, t_philo *philo);
+void    	start(t_data *data, t_philo *philo);
 void    	*routine_philo(void *arg);
 
 /*******************forks***************************/
@@ -88,7 +98,7 @@ int 	pick_up_right(t_philo *philo);
 
 /*******************forks***************************/
 
-void    	start(t_data *data);
+
 void    	print_msg(t_philo *philo, char *str);
 void    	id_left_philo(t_philo *philo);
 void 		philo_eat(t_philo *philo);
@@ -98,8 +108,12 @@ void    	*routine_philo(void *arg);
 void 		ft_free(t_data *data);
 void    	drop_forks(t_philo *philo);
 size_t		get_timestamp(void);
-void    ft_usleep(int milisec, t_philo *philo);
+void    ft_usleep(int milisec);
 int philo_is_dead(t_philo *philo);
 int    check_philo_is_dead(t_philo *philo);
+void destroy_mutex(t_data *data);
+void    action_philo(t_philo *philo, size_t time);
+int philo_is_dead(t_philo *philo);
+int init_mutex(t_data *data);
 
 #endif 

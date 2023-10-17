@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 19:07:06 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/10 09:24:16 by correia          ###   ########.fr       */
+/*   Updated: 2023/10/17 18:26:19 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,20 +121,20 @@ int is_digit(int ac, char **av)
     return(0);
 }
 
-void    print_data(t_data *data)
-{
-    int i;
+// void    print_data(t_data *data)
+// {
+//     int i;
 
-    i = 0;
-    printf("number of philos = %d\n", data->number_of_philos);
-    printf("time to die = %d\n", data->time_to_die);
-    printf("time to eat = %d\n", data->time_to_eat);
-    printf("time to sleep = %d\n", data->time_to_sleep);
-    printf("number of meals = %d\n", data->number_of_meals);
-    while(i < data->number_of_philos)
-    {
-        printf("id = %d\n", data->philo[i]->id);
-        printf("state = %d\n", data->philo[i]->state);
-        i++;      
-    }
-}
+//     i = 0;
+//     printf("number of philos = %d\n", data->number_of_philos);
+//     printf("time to die = %d\n", data->time_to_die);
+//     printf("time to eat = %d\n", data->time_to_eat);
+//     printf("time to sleep = %d\n", data->time_to_sleep);
+//     printf("number of meals = %d\n", data->number_of_meals);
+//     while(i < data->number_of_philos)
+//     {
+//         printf("id = %d\n", data->philo[i]->id);
+//         printf("state = %d\n", data->philo[i]->state);
+//         i++;      
+//     }
+// }

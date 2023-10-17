@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:46:58 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/14 18:06:22 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:26:05 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ void    init_data(int ac, char **av, t_data *data)
         data->number_of_meals = ft_atoi(av[5]);
     else
         data->number_of_meals = -1;
-    data->start_time = get_timestamp();
-    data->dead = 0; 
-    pthread_mutex_init(&data->mutex_msg, NULL);
-    pthread_mutex_init(&data->mutex, NULL);
+    data->dead = 1;
 }
 
 /**
@@ -47,37 +44,46 @@ void    init_data(int ac, char **av, t_data *data)
  * Inicializa os campos da estrutura t_philo para cada filósofo.
  */
 
-void    alloc_philos(t_data *data)
+void    alloc_philos(t_data *data, t_philo *philo)
 {
     int i;
-
-    data->philo = malloc(sizeof(t_philo *) * data->number_of_philos + 1);
-    if(!data->philo)
-        write(1, "Malloc Error", 13);
+  
     i = 0;
     while(i < data->number_of_philos)
     {
-        data->philo[i] = malloc(sizeof(t_philo));
-        if(!data->philo)
-            write(1, "Malloc Error", 13);
-        pthread_mutex_init(&data->philo[i]->mutex_philo, NULL);
-        pthread_mutex_init(&data->philo[i]->mutex_life, NULL);
-        data->philo[i]->id = i + 1;
-        data->philo[i]->state = THINK; 
-        data->philo[i]->fork = 1;
-        data->philo[i]->n_eaten = 0; 
-        data->philo[i]->data = data;
-        data->philo[i]->id_left_philo = -1;
-        id_left_philo(data->philo[i]); 
-        i++;
         
+        philo[i].id = i + 1;
+        philo[i].state = THINK; 
+        philo[i].n_eaten = data->number_of_meals ; 
+        philo[i].data = data;
+        philo[i].last_eat = get_timestamp();
+        philo[i].left_fork = philo[i].id - 1;
+        philo[i].right_fork = (philo[i].id) % data->number_of_philos;
+        i++;   
     }
 }
-
-void    id_left_philo(t_philo *philo)
+int init_mutex(t_data *data)
 {
-    if(philo->id == 1)
-       philo->id_left_philo = philo->data->number_of_philos;
-    else
-        philo->id_left_philo = philo->id - 1;      
+    int i;
+    if(pthread_mutex_init(&data->mutex_msg, NULL))
+        return (1);
+    if(pthread_mutex_init(&data->mutex_meal, NULL))
+        return (1);
+    if(pthread_mutex_init(&data->mutex_dead, NULL))
+        return (1);
+    data->fork = malloc(sizeof(t_fork) * (data->number_of_philos));
+    if(!data->fork)
+    {
+        write(1, "Malloc Error", 13);
+        exit(1);
+    }
+    i = 0;
+    while(i < data->number_of_philos)
+    {
+        data->fork[i].aval = 1;
+        if(pthread_mutex_init(&data->fork[i].mutex_fork, NULL))
+            return (1);
+        i++;
+    } 
+    return(0);
 }
