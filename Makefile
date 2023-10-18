@@ -10,10 +10,6 @@ CC 				   = cc
 
 CFLAGS 			   = -pthread -Wall -Wextra -Werror -g # -fsanitize=address
 
-LIBFT_PATH 		   = libft
-
-LIBFT_LIB	       = $(LIBFT_PATH)/libft.a
-
 RM 				   = rm -f
 
 .c.o:
@@ -22,7 +18,6 @@ RM 				   = rm -f
 all:		$(LIBFT_LIB) $(NAME)
 
 $(NAME):	$(OBJS)
-			@make -C $(LIBFT_PATH)
 			$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) -o $(NAME) 
 #			clear
 			@echo "$(BLUE)Compilation $(NAME_PROJECT) $(GREEN)  [OK]$(RESET)"
@@ -30,7 +25,6 @@ $(NAME):	$(OBJS)
 	
 clean:		
 	$(RM) $(OBJS)
-	@make clean -C $(LIBFT_PATH)
 	clear
 	@echo "$(GREEN) $(NAME_PROJECT) $(RED)Objects Removed! $(RESET)"
 
