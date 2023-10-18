@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:36:55 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/17 17:29:14 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:19:57 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,28 @@
 
 int pick_up_left(t_philo *philo)
 {
-    //int i;
-
-    // i = philo->id_left_philo - 1;
     pthread_mutex_lock(&philo->data->fork[philo->left_fork].mutex_fork);
     if(!philo->data->fork[philo->left_fork].aval)
     {
         pthread_mutex_unlock(&philo->data->fork[philo->left_fork].mutex_fork);
+        if(philo->state != THINK)
+            print_msg(philo, "is thinking");
+        philo->state = THINK;
         return (1);
-        // philo->fork--;
-        // (philo->data->philo[i]->fork)--;
-        // pthread_mutex_unlock(&philo->mutex_philo);
-        // pthread_mutex_unlock(&philo->data->philo[philo->left_fork]->mutex_philo);
-        // if(!philo->data->dead)
-        // {
-        //     print_msg(philo, "has taken a fork");
-        //     print_msg(philo, "has taken a fork");
-        // }
-        // return (1);
+
     }
     pthread_mutex_lock(&philo->data->fork[philo->right_fork].mutex_fork);
     if(!philo->data->fork[philo->right_fork].aval)
     {
+        pthread_mutex_unlock(&philo->data->fork[philo->left_fork].mutex_fork);
         pthread_mutex_unlock(&philo->data->fork[philo->right_fork].mutex_fork);
+        if(philo->state != THINK)
+            print_msg(philo, "is thinking");
+        philo->state = THINK;
         return (1);
     }
     print_msg(philo, "has taken a fork");
     print_msg(philo, "has taken a fork");
-    // pthread_mutex_unlock(&philo->mutex_philo);
-    // pthread_mutex_unlock(&philo->data->philo[philo->left_fork]->mutex_philo);
     return (0);
 }
 
@@ -52,18 +45,23 @@ int pick_up_right(t_philo *philo)
     if(!philo->data->fork[philo->right_fork].aval)
     {
         pthread_mutex_unlock(&philo->data->fork[philo->right_fork].mutex_fork);
+        if(philo->state != THINK)
+            print_msg(philo, "is thinking");
+        philo->state = THINK;
         return (1) ;
     }
     pthread_mutex_lock(&philo->data->fork[philo->left_fork].mutex_fork);
     if(!philo->data->fork[philo->left_fork].aval)
     {
+        pthread_mutex_unlock(&philo->data->fork[philo->right_fork].mutex_fork);
         pthread_mutex_unlock(&philo->data->fork[philo->left_fork].mutex_fork);
+        if(philo->state != THINK)
+            print_msg(philo, "is thinking");
+        philo->state = THINK;
         return (1);
     }
     print_msg(philo, "has taken a fork");
     print_msg(philo, "has taken a fork");
-    // pthread_mutex_unlock(&philo->mutex_philo);
-    // pthread_mutex_unlock(&philo->data->philo[philo->left_fork]->mutex_philo);
     return (0);
 }
 

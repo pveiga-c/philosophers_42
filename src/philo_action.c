@@ -6,7 +6,7 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:48:09 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/17 19:37:58 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:59:55 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void philo_sleep(t_philo *philo)
     philo->state = SLEEP;
     print_msg(philo, "is sleeping");
     action_philo(philo, philo->data->time_to_sleep);
-    ft_usleep(100);
-
+    usleep(100);
 }
 
 void philo_think(t_philo *philo)
