@@ -6,13 +6,13 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 19:07:06 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/18 16:47:22 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:01:52 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-int check_args (int ac, char **av)
+int	check_args(int ac, char **av)
 {
     if(check_ac(ac) == 1)
         return (1);

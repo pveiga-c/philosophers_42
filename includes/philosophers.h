@@ -6,14 +6,13 @@
 /*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:35:30 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/17 19:30:20 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/18 17:56:14 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 #define PHILOSOPHERS_H
 
-#include "../libft/libft.h"
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
@@ -115,5 +114,6 @@ void destroy_mutex(t_data *data);
 void    action_philo(t_philo *philo, size_t time);
 int philo_is_dead(t_philo *philo);
 int init_mutex(t_data *data);
+int	ft_atoi(const char *nptr);
 
 #endif 
