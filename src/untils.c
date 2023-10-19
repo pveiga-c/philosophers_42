@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   untils.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:51:24 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/18 16:29:38 by pveiga-c         ###   ########.fr       */
+/*   Updated: 2023/10/19 09:28:13 by correia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,25 @@ int	ft_atoi(const char *nptr)
 	return (num * signal);
 }
 
-int is_digit(int ac, char **av)
+int	is_digit(int ac, char **av)
 {
-    int i;
-    int j;
+	int i;
+	int j;
 
-    i = 1;
-    while(i < ac)
-    {
-        j = 0;
-        while(av[i][j] != '\0')
-        {
-            if(av[i][j] < '0' || av[i][j] > '9')
-            {
-                printf("ERROR :The arguments must be digits.\n");
-                return (1);
-            }
-            j++;
-        }
-        i++;
-    }
-    return(0);
+	i = 1;
+	while (i < ac)
+	{
+		j = 0;
+		while (av[i][j] != '\0')
+		{
+			if (av[i][j] < '0' || av[i][j] > '9')
+			{
+				printf("ERROR :The arguments must be digits.\n");
+				return (1);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }
