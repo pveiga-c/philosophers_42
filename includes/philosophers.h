@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:35:30 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/19 09:37:11 by correia          ###   ########.fr       */
+/*   Updated: 2023/10/19 16:20:55 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,19 +99,21 @@ void					action_philo(t_philo *philo, size_t time);
 void					init_data(int ac, char **av, t_data *data);
 void					alloc_philos(t_data *data, t_philo *philo);
 int						init_mutex(t_data *data);
+int						one_philo(t_philo *philo);
 
 /*******************thread***************************/
 
-int						is_digit(int ac, char **av);
 void					start(t_data *data, t_philo *philo);
 void					*routine_philo(void *arg);
-void					*routine_philo(void *arg);
-void					ft_free(t_data *data);
-size_t					get_timestamp(void);
-void					ft_usleep(int milisec);
-int						check_philo_is_dead(t_philo *philo);
 void					destroy_mutex(t_data *data);
-int						philo_is_dead(t_philo *philo);
+
+/*******************time******************************/
+
+size_t					get_timestamp(void);
+
+/*******************utils***************************/
+
 int						ft_atoi(const char *nptr);
+int						is_digit(int ac, char **av);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:46:58 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/19 09:27:51 by correia          ###   ########.fr       */
+/*   Updated: 2023/10/19 16:22:01 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	alloc_philos(t_data *data, t_philo *philo)
 		i++;
 	}
 }
+
 int	init_mutex(t_data *data)
 {
 	int	i;
@@ -65,6 +66,18 @@ int	init_mutex(t_data *data)
 		if (pthread_mutex_init(&data->fork[i].mutex_fork, NULL))
 			return (1);
 		i++;
+	}
+	return (0);
+}
+
+int	one_philo(t_philo *philo)
+{
+	if (philo->data->number_of_philos == 1)
+	{
+		print_msg(philo, "is thinking");
+		usleep(philo->data->time_to_die * 1000);
+		print_msg(philo, "died");
+		return (1);
 	}
 	return (0);
 }

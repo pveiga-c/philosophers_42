@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:47:56 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/19 09:28:02 by correia          ###   ########.fr       */
+/*   Updated: 2023/10/19 16:24:27 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,13 @@ void	start(t_data *data, t_philo *philo)
 	destroy_mutex(data);
 }
 
-void	destroy_mutex(t_data *data)
-{
-	int	i;
-
-	pthread_mutex_destroy(&data->mutex_meal);
-	pthread_mutex_destroy(&data->mutex_dead);
-	pthread_mutex_destroy(&data->mutex_msg);
-	i = 0;
-	while (i < data->number_of_philos)
-		pthread_mutex_destroy(&data->fork[i++].mutex_fork);
-}
-
 void	*routine_philo(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (one_philo(philo) == 1)
+		return ((void *)0);
 	while (philo->n_eaten != 0)
 	{
 		pthread_mutex_lock(&philo->data->mutex_dead);
@@ -73,4 +63,16 @@ void	*routine_philo(void *arg)
 			philo_think(philo);
 	}
 	return (NULL);
+}
+
+void	destroy_mutex(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(&data->mutex_meal);
+	pthread_mutex_destroy(&data->mutex_dead);
+	pthread_mutex_destroy(&data->mutex_msg);
+	while (i < data->number_of_philos)
+		pthread_mutex_destroy(&data->fork[i++].mutex_fork);
 }

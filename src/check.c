@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pveiga-c <pveiga-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 19:07:06 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/19 09:27:26 by correia          ###   ########.fr       */
+/*   Updated: 2023/10/19 15:50:26 by pveiga-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int	check_av(int ac, char **av)
 		number_of_times_each_philosopher_must_eat = ft_atoi(av[5]);
 	else
 		number_of_times_each_philosopher_must_eat = 0;
-	if (number_of_philos < 1 || number_of_philos > 200 || time_to_die < 0
-		|| time_to_eat < 0 || time_to_sleep < 0
+	if (number_of_philos < 1 || number_of_philos > 200 || time_to_die < 60
+		|| time_to_eat < 60 || time_to_sleep < 60
 		|| number_of_times_each_philosopher_must_eat < 0)
 	{
 		printf("Error: Invalid arguments\n");
