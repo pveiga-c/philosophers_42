@@ -6,7 +6,7 @@
 /*   By: correia <correia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:35:30 by pveiga-c          #+#    #+#             */
-/*   Updated: 2023/10/19 09:28:18 by correia          ###   ########.fr       */
+/*   Updated: 2023/10/19 09:37:11 by correia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,46 +71,47 @@ struct					s_philo
 /****************philosophers***********************/
 
 int						main(int ac, char **av);
-void					init_data(int ac, char **av, t_data *data);
+void					print_msg(t_philo *philo, char *str);
 
 /*******************check***************************/
 
 int						check_args(int ac, char **av);
 int						check_ac(int ac);
 int						check_av(int ac, char **av);
-int						is_digit(int ac, char **av);
-//void    print_data(t_data *data);
-
-/*******************check***************************/
-
-void					alloc_philos(t_data *data, t_philo *philo);
-void					start(t_data *data, t_philo *philo);
-void					*routine_philo(void *arg);
 
 /*******************forks***************************/
 
-int						pick_up_fork(t_philo *philo);
 int						pick_up_left(t_philo *philo);
 int						pick_up_right(t_philo *philo);
+int						pick_up_fork(t_philo *philo);
+void					drop_forks(t_philo *philo);
 
-/*******************forks***************************/
+/******************philo_action**********************/
 
-void					print_msg(t_philo *philo, char *str);
-void					id_left_philo(t_philo *philo);
 void					philo_eat(t_philo *philo);
 void					philo_sleep(t_philo *philo);
 void					philo_think(t_philo *philo);
+int						philo_is_dead(t_philo *philo);
+void					action_philo(t_philo *philo, size_t time);
+
+/*******************philo***************************/
+
+void					init_data(int ac, char **av, t_data *data);
+void					alloc_philos(t_data *data, t_philo *philo);
+int						init_mutex(t_data *data);
+
+/*******************thread***************************/
+
+int						is_digit(int ac, char **av);
+void					start(t_data *data, t_philo *philo);
+void					*routine_philo(void *arg);
 void					*routine_philo(void *arg);
 void					ft_free(t_data *data);
-void					drop_forks(t_philo *philo);
 size_t					get_timestamp(void);
 void					ft_usleep(int milisec);
-int						philo_is_dead(t_philo *philo);
 int						check_philo_is_dead(t_philo *philo);
 void					destroy_mutex(t_data *data);
-void					action_philo(t_philo *philo, size_t time);
 int						philo_is_dead(t_philo *philo);
-int						init_mutex(t_data *data);
 int						ft_atoi(const char *nptr);
 
 #endif
